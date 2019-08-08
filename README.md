@@ -60,7 +60,38 @@ def dense_relu_dense(self, inputs, padding=None):
                     output = tf.reshape(output, [batch_size, length, self.w2_dim])           
         return output
 ```
-## 5. Train
+## 6. Shared embedding matrix
+**Transformer**에서는 **Encoder**, **Decoder**, **Output softmax** layer에서 같은 embedding matrix를 사용한다.
+
+![alt_text](https://github.com/MSWon/Transformer-Translation/blob/master/images/shared_embedding.png "Shared embedding")
+```
+def build_embed(self, inputs, encoder=True, reuse=False):
+        with tf.variable_scope("Embeddings", reuse=reuse, initializer=tf.contrib.layers.xavier_initializer()):
+            # Word Embedding
+            self.emb_W = tf.get_variable('emb_W', [self.vocab, self.emb_dim], dtype = tf.float32)            
+            self.clear_emb_W = tf.scatter_update(self.emb_W, [0], tf.constant(0.0, shape=[1, self.emb_dim]))
+            embedding_inputs = self.emb_W
+            
+            if encoder:
+                max_seq_length = self.max_enc_len
+            else:
+                max_seq_length = self.max_dec_len
+
+            # Positional Encoding
+            with tf.variable_scope("positional-encoding"):
+                positional_encoded = model_utils.get_position_encoding(max_seq_length, self.emb_dim)
+            batch_size = tf.shape(inputs)[0]
+
+            ## Add
+            word_emb = tf.nn.embedding_lookup(embedding_inputs, inputs)       
+            position_inputs = tf.tile(tf.range(0, max_seq_length), [batch_size])
+            position_inputs = tf.reshape(position_inputs, [batch_size, max_seq_length])
+            position_emb = tf.nn.embedding_lookup(positional_encoded, position_inputs)
+            position_emb = tf.where(tf.equal(word_emb, 0), word_emb, position_emb)                       
+            encoded_inputs = tf.add(word_emb, position_emb)
+            return tf.nn.dropout(encoded_inputs, 1.0 - self.dropout)
+```
+## 6. Train
 **1. Git clone**
 ```
 $ git clone https://github.com/MSWon/Transformer-Translation.git
@@ -69,8 +100,8 @@ $ git clone https://github.com/MSWon/Transformer-Translation.git
 ```
 $ python train_transformer.py --num_layers 2 --num_heads 8 --batch_size 64 --training_epochs 40
 ```
-## 6. Results
-2 layer, 8 heads에 관한 실험 결과
+## 7. Results
+2 layer, 8 heads에 관한 실험 결과 (**BLEU : 24.04**)
 
 **1. Test loss**
 ![alt_text](https://github.com/MSWon/Transformer-Translation/blob/master/images/test_loss.png "Test loss")
