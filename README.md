@@ -60,7 +60,11 @@ def dense_relu_dense(self, inputs, padding=None):
                     output = tf.reshape(output, [batch_size, length, self.w2_dim])           
         return output
 ```
-## 5. Results
+## 5. Train
+```
+$ python train_transformer.py --num_layers 2 --num_heads 8 --batch_size 64 --training_epochs 40
+```
+## 6. Results
 2 layer, 8 heads에 관한 실험 결과
 
 **1. Test loss**
