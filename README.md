@@ -61,6 +61,11 @@ def dense_relu_dense(self, inputs, padding=None):
         return output
 ```
 ## 5. Train
+**1. Git clone**
+```
+$ git clone https://github.com/MSWon/Transformer-Translation.git
+```
+**2. Training with user settings**
 ```
 $ python train_transformer.py --num_layers 2 --num_heads 8 --batch_size 64 --training_epochs 40
 ```
