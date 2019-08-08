@@ -61,7 +61,7 @@ def dense_relu_dense(self, inputs, padding=None):
                     output = tf.reshape(output, [batch_size, length, self.w2_dim])           
         return output
 ```
-## 6. Shared embedding matrix
+## 5. Shared embedding matrix
 **Transformer**에서는 **Encoder**, **Decoder**, **Output softmax** layer에서 같은 embedding matrix를 사용한다.
 
 ![alt_text](https://github.com/MSWon/Transformer-Translation/blob/master/images/shared_embedding.png "Shared embedding")
