@@ -1,6 +1,6 @@
 # Transformer-Translation
-1. **Transformer model for translation**(Attention is all you need) Vietnam to English data
-2. This code was created by referring to the code in [DongjunLee](https://github.com/DongjunLee/transformer-tensorflow), [Kyubyong](https://github.com/Kyubyong/transformer), [Official](https://github.com/tensorflow/models/tree/master/official/transformer)
+1. **Transformer model for translation** (Attention is all you need) Vietnam to English data
+2. This code was created by referring to the code in [DongjunLee](https://github.com/DongjunLee/transformer-tensorflow), [Kyubyong](https://github.com/Kyubyong/transformer), [Official code](https://github.com/tensorflow/models/tree/master/official/transformer)
 ## 1. Model
 ![alt_text](https://github.com/MSWon/Transformer-Translation/blob/master/images/model.png "Model")
 
