@@ -109,3 +109,18 @@ $ python train_transformer.py --num_layers 2 --num_heads 8 --batch_size 64 --tra
 
 **2. Test BLEU score**
 ![alt_text](https://github.com/MSWon/Transformer-Translation/blob/master/images/test_bleu.png "Test BLEU")
+
+**3. Example**
+```
+Encoder Input ===> Tôi đã được lớn lên ở một quốc gia đã bị tiêu huỷ bởi bao thập niên chiến tranh .
+Decoder True ===> I was raised in a country that has been destroyed by decades of war .
+Decoder Pred ===> I grew up in a country that was <unk> by the war .
+==========================================================================================
+Encoder Input ===> Họ đều là nạn nhân của tổn thương , bệnh tật và bạo lực .
+Decoder True ===> All of them are victim to injury , illness and violence .
+Decoder Pred ===> They were all the victims of vulnerability , disease and violence .
+==========================================================================================
+Encoder Input ===> Và sau một vài tháng , tôi nhận ra rằng em khác biệt .
+Decoder True ===> And after a few months went by , I realized that he was different .
+Decoder Pred ===> And after a few months , I realized that you were different .
+```
