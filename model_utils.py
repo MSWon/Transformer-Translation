@@ -15,6 +15,8 @@ import tensorflow as tf
 _NEG_INF_FP32 = -1e9
 _NEG_INF_FP16 = np.finfo(np.float16).min
 
+'''
+## Position encoding from paper
 def get_position_encoding(sentence_length, dim, dtype=tf.float32):
     pos_enc = np.array([[pos / np.power(10000., 2. * (i // 2) / dim) for i in range(dim)] for pos in range(sentence_length)]) # [seq_len, d_model]    
     # Apply the cosine to even columns and sin to odds.
@@ -23,7 +25,9 @@ def get_position_encoding(sentence_length, dim, dtype=tf.float32):
     return tf.convert_to_tensor(pos_enc, dtype=dtype)
 
 '''
-def get_position_encoding(
+
+## Official code position encoding
+def get_position_encoding( 
     length, hidden_size, min_timescale=1.0, max_timescale=1.0e4):
   """Return positional encoding.
   Calculates the position encoding as a mix of sine and cosine functions with
@@ -50,7 +54,7 @@ def get_position_encoding(
   scaled_time = tf.expand_dims(position, 1) * tf.expand_dims(inv_timescales, 0)
   signal = tf.concat([tf.sin(scaled_time), tf.cos(scaled_time)], axis=1)
   return signal
-'''
+
 
 def get_decoder_self_attention_bias(length, dtype=tf.float32):
   """Calculate bias for decoder that maintains model's autoregressive property.
