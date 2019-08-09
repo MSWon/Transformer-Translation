@@ -102,7 +102,7 @@ $ git clone https://github.com/MSWon/Transformer-Translation.git
 $ python train_transformer.py --num_layers 2 --num_heads 8 --batch_size 64 --training_epochs 40
 ```
 ## 7. Results
-2 layer, 8 heads에 관한 실험 결과 (**BLEU : 24.04**)
+2 layer, 8 heads에 관한 실험 결과 (**BLEU : 24.74**)
 
 **1. Test loss**
 ![alt_text](https://github.com/MSWon/Transformer-Translation/blob/master/images/test_loss.png "Test loss")
