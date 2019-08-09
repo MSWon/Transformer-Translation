@@ -1,10 +1,22 @@
 # Transformer-Translation
-1. **Transformer model for translation** (Attention is all you need) Vietnam to English data
+## 1. Description
+1. **Transformer model for translation** (Attention is all you need)
 2. This code was created by referring to the code in [DongjunLee](https://github.com/DongjunLee/transformer-tensorflow), [Kyubyong](https://github.com/Kyubyong/transformer), [Official code](https://github.com/tensorflow/models/tree/master/official/transformer)
-## 1. Model
 ![alt_text](https://github.com/MSWon/Transformer-Translation/blob/master/images/model.png "Model")
+## 2. Data
+Vietnam to English data
+## 3. Train
+**1. Git clone**
+```
+$ git clone https://github.com/MSWon/Transformer-Translation.git
+```
+**2. Training with user settings**
+```
+$ python train_transformer.py --num_layers 2 --num_heads 8 --batch_size 64 --training_epochs 40
+```
 
-## 2. Encoder mask
+# Training tips
+## 1. Encoder mask
 **Encoder**에서 <pad>에 관한 부분을 -inf로 masking을 함으로써 softmax시 0을 갖도록 한다.
 ![alt_text](https://github.com/MSWon/Transformer-Translation/blob/master/images/encoder_mask.png "Encoder mask")
 ```
@@ -21,7 +33,7 @@ def get_padding_bias(x):
   return attention_bias
 ```
 
-## 3. Decoder mask
+## 2. Decoder mask
 **Decoder**에서는 미래를 볼 수 없기 때문에 미래에 대한 부분을 -inf로 masking을 함으로써 softmax시 0을 갖도록 한다.
 ![alt_text](https://github.com/MSWon/Transformer-Translation/blob/master/images/decoder_mask.png "Decoder mask")
 ```
@@ -33,6 +45,19 @@ def get_decoder_self_attention_bias(length, dtype=tf.float32):
     decoder_bias = neg_inf * (1.0 - valid_locs)
   return decoder_bias
 ```
+
+## 3. Encoder-Decoder attention mask
+Encoder-Decoder attention시에 key, value vector에 해당하는 <pad>부분에 대해서 -inf masking을 해준다.
+![alt_text](https://github.com/MSWon/Transformer-Translation/blob/master/images/encoder_decoder_mask.png "Encoder Deecoder mask")
+```
+def get_padding_bias(x):
+  with tf.name_scope("attention_bias"):
+    padding = get_padding(x)
+    attention_bias = padding * _NEG_INF_FP32
+    attention_bias = tf.expand_dims(tf.expand_dims(attention_bias, axis=1), axis=1)
+  return attention_bias
+```
+
 ## 4. Feed foward network
 1. **Encoder**부분에서 Feed foward network의 입력 부분에서 <pad>에 관한 부분에 대해서 **tf.gather_nd**를 통해 제거 
 2. **tf.scatter_nd**를 통해 출력 할 때 <pad> 부분에 0 vector를 채운다.
@@ -92,22 +117,26 @@ def build_embed(self, inputs, encoder=True, reuse=False):
             encoded_inputs = tf.add(word_emb, position_emb)
             return tf.nn.dropout(encoded_inputs, 1.0 - self.dropout)
 ```
-## 6. Train
-**1. Git clone**
+## 6. Learning rate
+**Transformer**에서는 warmup_step(4000)까지 linear하게 learning rate를 증가시키고, 이후에는 감소시킨다.
+
+![alt_text](https://github.com/MSWon/Transformer-Translation/blob/master/images/learning_rate.png "learning rate")
 ```
-$ git clone https://github.com/MSWon/Transformer-Translation.git
+def noam_scheme(self, d_model, global_step, warmup_steps=4000):
+    step = tf.cast(global_step + 1, dtype=tf.float32)
+    return d_model ** (-0.5) * tf.minimum(step * warmup_steps ** -1.5, step ** -0.5)
 ```
-**2. Training with user settings**
-```
-$ python train_transformer.py --num_layers 2 --num_heads 8 --batch_size 64 --training_epochs 40
-```
+
 ## 7. Results
+
 2 layer, 8 heads에 관한 실험 결과 (**BLEU : 24.74**)
 
 **1. Test loss**
+
 ![alt_text](https://github.com/MSWon/Transformer-Translation/blob/master/images/test_loss.png "Test loss")
 
 **2. Test BLEU score**
+
 ![alt_text](https://github.com/MSWon/Transformer-Translation/blob/master/images/test_bleu.png "Test BLEU")
 
 **3. Example**
