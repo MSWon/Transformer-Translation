@@ -129,7 +129,7 @@ def noam_scheme(self, d_model, global_step, warmup_steps=4000):
 
 ## 7. Results
 
-2 layer, 8 heads에 관한 실험 결과 (**BLEU : 24.74**)
+4 layer, 8 heads에 관한 실험 결과 (**BLEU : 24.74**)
 
 **1. Test loss**
 
