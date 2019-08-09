@@ -16,8 +16,8 @@ $ python train_transformer.py --num_layers 4 --num_heads 8 --batch_size 64 --tra
 ```
 
 # Training tips
-**Transformer**을 학습을 할 때 중요한 것은 max_length로 padding을 한 <pad>에 대해서 처리를 해주어야 한다.
-이를 위해 Transformer에서는 Encoder, Decoder에 대해서 적절히 padding을 해주고 Encoder의 FFN layer 또한  처리를 해준다.
+1. **Transformer**을 학습을 할 때 중요한 것은 max_length로 padding을 한 <pad>에 대해서 처리를 해주어야 한다.
+2. 이를 위해 **Transformer**에서는 Encoder, Decoder, Encoder-Decoder attention에 대해서 적절히 masking을 한다.
 
 ## 1. Encoder mask
 **Encoder**에서 <pad>에 관한 부분을 -inf로 masking을 함으로써 softmax시 0을 갖도록 한다.
