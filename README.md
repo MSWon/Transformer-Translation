@@ -16,6 +16,9 @@ $ python train_transformer.py --num_layers 4 --num_heads 8 --batch_size 64 --tra
 ```
 
 # Training tips
+**Transformer**을 학습을 할 때 중요한 것은 max_length로 padding을 한 <pad>에 대해서 처리를 해주어야 한다.
+이를 위해 Transformer에서는 Encoder, Decoder에 대해서 적절히 padding을 해주고 Encoder의 FFN layer 또한  처리를 해준다.
+
 ## 1. Encoder mask
 **Encoder**에서 <pad>에 관한 부분을 -inf로 masking을 함으로써 softmax시 0을 갖도록 한다.
 ![alt_text](https://github.com/MSWon/Transformer-Translation/blob/master/images/encoder_mask.png "Encoder mask")
@@ -55,6 +58,8 @@ def get_decoder_self_attention_bias(length, dtype=tf.float32):
 ## 3. Encoder-Decoder attention mask
 Encoder-Decoder attention시에 key, value vector에 해당하는 <pad>부분에 대해서 -inf masking을 해준다.
 ![alt_text](https://github.com/MSWon/Transformer-Translation/blob/master/images/encoder_decoder_mask.png "Encoder Deecoder mask")
+
+[model_utils.py](https://github.com/MSWon/Transformer-Translation/blob/master/model_utils.py#L48)
 ```
 def get_padding_bias(x):
   with tf.name_scope("attention_bias"):
