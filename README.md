@@ -20,11 +20,11 @@ $ python train_transformer.py --num_layers 4 --num_heads 8 --batch_size 64 --tra
 ```
 
 # Training tips
-1. **Transformer**을 학습을 할 때 중요한 것은 max_length로 padding을 한 PAD에 대해서 처리를 해주어야 한다.
-2. 이를 위해 **Transformer**에서는 Encoder, Decoder, Encoder-Decoder attention에 대해서 적절히 masking을 한다.
+1. **Transformer**을 학습을 할 때 중요한 것은 max_length로 padding을 한 **PAD**에 대해서 처리를 해주어야 한다.
+2. 이를 위해 **Transformer**에서는 **Encoder, Decoder, Encoder-Decoder attention**에 대해서 적절히 **masking**을 한다.
 
 ## 1. Encoder mask
-**Encoder**에서 PAD에 관한 부분을 -inf로 masking을 함으로써 softmax시 0을 갖도록 한다.
+**Encoder**에서 **PAD**에 관한 부분을 **-inf**로 **masking**을 함으로써 softmax시 0을 갖도록 한다.
 ![alt_text](https://github.com/MSWon/Transformer-Translation/blob/master/images/encoder_mask.png "Encoder mask")
 
 [model_utils.py](https://github.com/MSWon/Transformer-Translation/blob/master/model_utils.py#L48)
@@ -45,7 +45,7 @@ def get_padding_bias(x):
 ```
 
 ## 2. Decoder mask
-**Decoder**에서는 미래를 볼 수 없기 때문에 미래에 대한 부분을 -inf로 masking을 함으로써 softmax시 0을 갖도록 한다.
+**Decoder**에서는 미래를 볼 수 없기 때문에 미래에 대한 부분을 **-inf**로 **masking**을 함으로써 softmax시 0을 갖도록 한다.
 ![alt_text](https://github.com/MSWon/Transformer-Translation/blob/master/images/decoder_mask.png "Decoder mask")
 
 [model_utils.py](https://github.com/MSWon/Transformer-Translation/blob/master/model_utils.py#L27)
@@ -60,7 +60,7 @@ def get_decoder_self_attention_bias(length, dtype=tf.float32):
 ```
 
 ## 3. Encoder-Decoder attention mask
-**Encoder-Decoder attention**시에 **key**, **value** vector에 해당하는 PAD부분에 대해서 -inf masking을 해준다.
+**Encoder-Decoder attention**시에 **key, value vector**에 해당하는 **PAD**부분에 대해서 **-inf masking**을 해준다.
 ![alt_text](https://github.com/MSWon/Transformer-Translation/blob/master/images/encoder_decoder_mask.png "Encoder Deecoder mask")
 
 [model_utils.py](https://github.com/MSWon/Transformer-Translation/blob/master/model_utils.py#L48)
