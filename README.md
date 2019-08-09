@@ -12,7 +12,7 @@ $ git clone https://github.com/MSWon/Transformer-Translation.git
 ```
 **2. Training with user settings**
 ```
-$ python train_transformer.py --num_layers 2 --num_heads 8 --batch_size 64 --training_epochs 40
+$ python train_transformer.py --num_layers 4 --num_heads 8 --batch_size 64 --training_epochs 25
 ```
 
 # Training tips
