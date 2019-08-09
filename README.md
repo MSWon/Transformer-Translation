@@ -4,7 +4,8 @@
 2. This code was created by referring to the code in [DongjunLee](https://github.com/DongjunLee/transformer-tensorflow), [Kyubyong](https://github.com/Kyubyong/transformer), [Official code](https://github.com/tensorflow/models/tree/master/official/transformer)
 ![alt_text](https://github.com/MSWon/Transformer-Translation/blob/master/images/model.png "Model")
 ## 2. Data
-Vietnam to English data
+1. [Vietnamese to English data (IWSLT'15)](https://nlp.stanford.edu/projects/nmt/)
+2. Train : 133k sentence pairs
 ## 3. Train
 **1. Git clone**
 ```
