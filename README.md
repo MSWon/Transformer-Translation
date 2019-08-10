@@ -74,7 +74,7 @@ def get_padding_bias(x):
 ```
 
 ## 4. Feed foward network
-1. **Encoder**부분에서 Feed foward network의 입력 부분에서 <pad>에 관한 부분에 대해서 **tf.gather_nd**를 통해 제거 
+1. **Encoder**부분에서 Feed foward network의 입력 부분에서 **PAD**에 관한 부분에 대해서 **tf.gather_nd**를 통해 제거 
 2. **tf.scatter_nd**를 통해 출력 할 때 <pad> 부분에 0 vector를 채운다.
   
 ![alt_text](https://github.com/MSWon/Transformer-Translation/blob/master/images/feed_foward.png "Feed foward")
