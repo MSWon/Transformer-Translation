@@ -24,7 +24,7 @@ if __name__ == '__main__':
     flags.DEFINE_integer('dec_max_len', 100, 'decoder max length')
     flags.DEFINE_integer('batch_size', 64, 'number of batch size')
     flags.DEFINE_integer('warmup_steps', 4000, 'number warmup steps')
-    flags.DEFINE_integer('training_epochs', 40, 'number of training epochs')
+    flags.DEFINE_integer('training_epochs', 25, 'number of training epochs')
    
     print('========================')
     for key in FLAGS.__flags.keys():
