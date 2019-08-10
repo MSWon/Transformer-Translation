@@ -1,6 +1,6 @@
 # Transformer-Translation
 ## 1. Description
-1. **Transformer model for translation** (Attention is all you need)
+1. **Transformer model for translation** ([Attention is all you need](https://papers.nips.cc/paper/7181-attention-is-all-you-need.pdf))
 2. This code was created by referring to the code in [DongjunLee](https://github.com/DongjunLee/transformer-tensorflow), [Kyubyong](https://github.com/Kyubyong/transformer), [Official code](https://github.com/tensorflow/models/tree/master/official/transformer)
 3. Trained on 1 gpu(Geforce Gtx 1080 ti)
 
