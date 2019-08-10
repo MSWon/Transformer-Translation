@@ -152,7 +152,7 @@ def noam_scheme(self, d_model, global_step, warmup_steps=4000):
 
 1. 4 layer, 8 heads, 512 hidden dimension 에 관한 실험 결과 (**BLEU : 24.74**)
 2. 6 layer로 했을 때 수렴하는데 오래 걸리고 오히려 성능이 떨어지는 것을 볼 수 있었다.(warmup step을 늘려야 할 것)
-3. Beam search에 관한 것은 구현이 필요하다.
+3. Beam search에 관한 것은 구현이 안된 상태이다.
 
 **1. Test loss**
 
