@@ -75,7 +75,7 @@ def get_padding_bias(x):
 
 ## 4. Feed foward network
 1. **Encoder**부분에서 Feed foward network의 입력 부분에서 **PAD**에 관한 부분에 대해서 **tf.gather_nd**를 통해 제거 
-2. **tf.scatter_nd**를 통해 출력 할 때 <pad> 부분에 0 vector를 채운다.
+2. **tf.scatter_nd**를 통해 출력 할 때 **PAD** 부분에 **0 vector**를 채운다.
   
 ![alt_text](https://github.com/MSWon/Transformer-Translation/blob/master/images/feed_foward.png "Feed foward")
 
@@ -104,7 +104,7 @@ def dense_relu_dense(self, inputs, padding=None):
         return output
 ```
 ## 5. Shared embedding matrix
-**Transformer**에서는 **Encoder**, **Decoder**, **Output softmax** layer에서 같은 embedding matrix를 사용한다.
+**Transformer**에서는 **Encoder**, **Decoder**, **Output softmax layer**에서 같은 **embedding matrix**를 사용한다.
 
 ![alt_text](https://github.com/MSWon/Transformer-Translation/blob/master/images/shared_embedding.png "Shared embedding")
 
