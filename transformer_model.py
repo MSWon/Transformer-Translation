@@ -24,11 +24,11 @@ config.gpu_options.allow_growth = True
 
 
 class Model(object):
-    def __init__(self, emb_dim=512, num_layers=6, num_heads=8,
+    def __init__(self, hidden_dim=512, num_layers=6, num_heads=8,
                  linear_key_dim=512, linear_value_dim=512, ffn_dim=2048,
                  max_enc_len=100, max_dec_len=100, batch_size=128, warmup_steps=4000):
         
-        self.emb_dim = emb_dim
+        self.hidden_dim = hidden_dim
         self.num_layers = num_layers
         self.num_heads = num_heads
         self.linear_key_dim = linear_key_dim
@@ -175,7 +175,7 @@ class Model(object):
     def build_embed(self, inputs, encoder=True, reuse=False):
         with tf.variable_scope("Embeddings", reuse=reuse, initializer=tf.contrib.layers.xavier_initializer()):
             # Word Embedding
-            self.shared_weights = tf.get_variable('shared_weights', [self.vocab, self.emb_dim], dtype = tf.float32)            
+            self.shared_weights = tf.get_variable('shared_weights', [self.vocab, self.hidden_dim], dtype = tf.float32)            
             
             if encoder:
                 max_seq_length = self.max_enc_len
@@ -185,13 +185,13 @@ class Model(object):
             # Positional Encoding
             with tf.variable_scope("positional-encoding"):
                 positional_encoded = model_utils.get_position_encoding(max_seq_length,
-                                                                       self.emb_dim)
+                                                                       self.hidden_dim)
             batch_size = tf.shape(inputs)[0]
             mask = tf.to_float(tf.not_equal(inputs, 0))
             ## Add
             word_emb = tf.nn.embedding_lookup(self.shared_weights, inputs)   ## batch_size, length, dim
             word_emb *= tf.expand_dims(mask, -1) ## zeros out masked positions
-            word_emb *= self.emb_dim ** 0.5 ## Scale embedding by the sqrt of the hidden size
+            word_emb *= self.hidden_dim ** 0.5 ## Scale embedding by the sqrt of the hidden size
             position_inputs = tf.tile(tf.range(0, max_seq_length), [batch_size])
             position_inputs = tf.reshape(position_inputs, [batch_size, max_seq_length])
             position_emb = tf.nn.embedding_lookup(positional_encoded, position_inputs)                       
@@ -206,7 +206,7 @@ class Model(object):
                               num_heads=self.num_heads,
                               linear_key_dim=self.linear_key_dim,
                               linear_value_dim=self.linear_value_dim,
-                              model_dim=self.emb_dim,
+                              model_dim=self.hidden_dim,
                               ffn_dim=self.ffn_dim)
             ## padding = model_utils.get_padding(x)
             return encoder.build(encoder_emb_inp, padding_bias, padding=None)
@@ -218,7 +218,7 @@ class Model(object):
                               num_heads=self.num_heads,
                               linear_key_dim=self.linear_key_dim,
                               linear_value_dim=self.linear_value_dim,
-                              model_dim=self.emb_dim,
+                              model_dim=self.hidden_dim,
                               ffn_dim=self.ffn_dim)
             return decoder.build(decoder_emb_inp, encoder_outputs, dec_bias, enc_dec_bias)
 
@@ -226,7 +226,7 @@ class Model(object):
         with tf.variable_scope("Output", reuse=reuse):
             t_shape = decoder_outputs.get_shape().as_list() ## batch_size, seq_length, dim
             seq_length = t_shape[1]
-            decoder_outputs = tf.reshape(decoder_outputs, [-1,self.emb_dim])
+            decoder_outputs = tf.reshape(decoder_outputs, [-1,self.hidden_dim])
             logits = tf.matmul(decoder_outputs, self.shared_weights, transpose_b=True)
             logits = tf.reshape(logits, [-1, seq_length, self.vocab])
         return logits
