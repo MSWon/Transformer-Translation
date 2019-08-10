@@ -15,7 +15,7 @@ if __name__ == '__main__':
     
     ## Model parameter
     flags.DEFINE_integer('hidden_dim', 512, 'dimension of hidden nodes')
-    flags.DEFINE_integer('num_layers', 4, 'number of layers of transformer encoders')
+    flags.DEFINE_integer('num_layers', 6, 'number of layers of transformer encoders')
     flags.DEFINE_integer('num_heads', 8, 'number of heads of transformer encoders')
     flags.DEFINE_integer('linear_key_dim', 512, 'dimension of key vector')
     flags.DEFINE_integer('linear_value_dim', 512, 'dimension of value vector')
