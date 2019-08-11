@@ -151,7 +151,7 @@ def noam_scheme(self, d_model, global_step, warmup_steps=4000):
 ## 7. Results
 
 1. 4 layer, 8 heads, 512 hidden dimension 에 관한 실험 결과 (**BLEU : 24.74**)
-2. 6 layer, 8 heads, 512 hidden dimension, 16000 warmup steps 에 관한 실험 결과 (**BLEU : 27.53**)
+2. 6 layer, 8 heads, 512 hidden dimension, 16000 warmup steps 에 관한 실험 결과 (**BLEU : 27.57**)
 3. Beam search에 관한 것은 구현이 안된 상태이다.
 
 **1. Test loss**
