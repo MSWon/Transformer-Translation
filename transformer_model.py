@@ -208,8 +208,8 @@ class Model(object):
                               linear_value_dim=self.linear_value_dim,
                               model_dim=self.hidden_dim,
                               ffn_dim=self.ffn_dim)
-            ## padding = model_utils.get_padding(x)
-            return encoder.build(encoder_emb_inp, padding_bias, padding=None)
+            padding = model_utils.get_padding(x)
+            return encoder.build(encoder_emb_inp, padding_bias, padding=padding)
 
     def build_decoder(self, decoder_emb_inp, encoder_outputs, dec_bias, attention_bias, reuse=False):
         enc_dec_bias = attention_bias
